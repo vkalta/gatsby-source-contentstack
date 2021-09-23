@@ -145,6 +145,7 @@ exports.sourceNodes = async ({
   try {
     const { contentstackData: _contentstackData } = await fetchData(configOptions, reporter);
     contentstackData = _contentstackData;
+    console.log('_contentstackData-node lc try catch---->', _contentstackData);
     contentstackData.contentTypes = await cache.get(typePrefix);
   } catch (error) {
     reporter.panic({
@@ -156,7 +157,7 @@ exports.sourceNodes = async ({
     });
     throw error;
   }
-  
+  console.log('contentstackData-node lc---->', contentstackData);
   const syncData = contentstackData.syncData.reduce((merged, item) => {
     if (!merged[item.type]) {
       merged[item.type] = [];

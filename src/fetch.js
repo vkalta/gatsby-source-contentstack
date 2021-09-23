@@ -34,6 +34,7 @@ exports.fetchData = async (configOptions, reporter) => {
     try {
       const [syncEntryData, syncAssetData] = await Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
       console.log('syncEntryData---->', JSON.stringify(syncEntryData));
+      console.log('syncEntryData.sync_token', syncEntryData.sync_token);
       const data = syncEntryData.data.concat(syncAssetData.data);
       syncData.data = data;
       syncData.token = null;
@@ -72,7 +73,7 @@ exports.fetchData = async (configOptions, reporter) => {
   };
 
   console.timeEnd('Fetch Contentstack data');
-
+  console.log('time ended', contentstackData);
   return {
     contentstackData,
   };

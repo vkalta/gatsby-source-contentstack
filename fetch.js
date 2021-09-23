@@ -32,7 +32,7 @@ exports.fetchData = /*#__PURE__*/function () {
             console.log('configOptions.expediteBuild', configOptions.expediteBuild);
 
             if (!configOptions.expediteBuild) {
-              _context.next = 30;
+              _context.next = 31;
               break;
             }
 
@@ -61,14 +61,15 @@ exports.fetchData = /*#__PURE__*/function () {
             syncEntryData = _yield$Promise$all2[0];
             syncAssetData = _yield$Promise$all2[1];
             console.log('syncEntryData---->', JSON.stringify(syncEntryData));
+            console.log('syncEntryData.sync_token', syncEntryData.sync_token);
             data = syncEntryData.data.concat(syncAssetData.data);
             syncData.data = data;
             syncData.token = null;
-            _context.next = 28;
+            _context.next = 29;
             break;
 
-          case 25:
-            _context.prev = 25;
+          case 26:
+            _context.prev = 26;
             _context.t0 = _context["catch"](12);
             reporter.panic({
               id: CODES.SyncError,
@@ -78,28 +79,28 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t0
             });
 
-          case 28:
-            _context.next = 40;
+          case 29:
+            _context.next = 41;
             break;
 
-          case 30:
+          case 31:
             syncParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
-            _context.prev = 31;
-            _context.next = 34;
+            _context.prev = 32;
+            _context.next = 35;
             return fetchSyncData(syncParams, configOptions);
 
-          case 34:
+          case 35:
             syncData = _context.sent;
-            _context.next = 40;
+            _context.next = 41;
             break;
 
-          case 37:
-            _context.prev = 37;
-            _context.t1 = _context["catch"](31);
+          case 38:
+            _context.prev = 38;
+            _context.t1 = _context["catch"](32);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -108,22 +109,23 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t1
             });
 
-          case 40:
+          case 41:
             contentstackData = {
               syncData: syncData.data,
               sync_token: syncData.sync_token
             };
             console.timeEnd('Fetch Contentstack data');
+            console.log('time ended', contentstackData);
             return _context.abrupt("return", {
               contentstackData: contentstackData
             });
 
-          case 43:
+          case 45:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[12, 25], [31, 37]]);
+    }, _callee, null, [[12, 26], [32, 38]]);
   }));
 
   return function (_x, _x2) {
