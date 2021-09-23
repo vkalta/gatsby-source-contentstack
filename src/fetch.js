@@ -13,14 +13,15 @@ exports.fetchData = async (configOptions, reporter) => {
   console.log('Starting to fetch data from Contentstack');
 
   let syncData = {};
-
+  console.log('configOptions.expediteBuild', configOptions.expediteBuild);
   if (configOptions.expediteBuild) {
+    console.log('configOptions--->', configOptions.syncToken);
     const syncEntryParams = configOptions.syncToken ? {
       sync_token: configOptions.syncToken,
     } : {
         init: true,
       };
-
+    console.log('syncEntryParams--->', syncEntryParams);
     const syncAssetParams = configOptions.syncToken ? {
       sync_token: configOptions.syncToken,
     } : {
@@ -29,9 +30,10 @@ exports.fetchData = async (configOptions, reporter) => {
 
     syncEntryParams.type = 'entry_published';
     syncAssetParams.type = 'asset_published';
-
+    console.log('syncEntryParams.type==>', syncEntryParams);
     try {
       const [syncEntryData, syncAssetData] = await Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
+      console.log('syncEntryData---->', JSON.stringify(syncEntryData));
       const data = syncEntryData.data.concat(syncAssetData.data);
       syncData.data = data;
       syncData.token = null;

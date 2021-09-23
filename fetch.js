@@ -29,17 +29,20 @@ exports.fetchData = /*#__PURE__*/function () {
             console.time('Fetch Contentstack data');
             console.log('Starting to fetch data from Contentstack');
             syncData = {};
+            console.log('configOptions.expediteBuild', configOptions.expediteBuild);
 
             if (!configOptions.expediteBuild) {
-              _context.next = 25;
+              _context.next = 30;
               break;
             }
 
+            console.log('configOptions--->', configOptions.syncToken);
             syncEntryParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
+            console.log('syncEntryParams--->', syncEntryParams);
             syncAssetParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
@@ -47,24 +50,26 @@ exports.fetchData = /*#__PURE__*/function () {
             };
             syncEntryParams.type = 'entry_published';
             syncAssetParams.type = 'asset_published';
-            _context.prev = 8;
-            _context.next = 11;
+            console.log('syncEntryParams.type==>', syncEntryParams);
+            _context.prev = 12;
+            _context.next = 15;
             return Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
 
-          case 11:
+          case 15:
             _yield$Promise$all = _context.sent;
             _yield$Promise$all2 = (0, _slicedToArray2["default"])(_yield$Promise$all, 2);
             syncEntryData = _yield$Promise$all2[0];
             syncAssetData = _yield$Promise$all2[1];
+            console.log('syncEntryData---->', JSON.stringify(syncEntryData));
             data = syncEntryData.data.concat(syncAssetData.data);
             syncData.data = data;
             syncData.token = null;
-            _context.next = 23;
+            _context.next = 28;
             break;
 
-          case 20:
-            _context.prev = 20;
-            _context.t0 = _context["catch"](8);
+          case 25:
+            _context.prev = 25;
+            _context.t0 = _context["catch"](12);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -73,28 +78,28 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t0
             });
 
-          case 23:
-            _context.next = 35;
+          case 28:
+            _context.next = 40;
             break;
 
-          case 25:
+          case 30:
             syncParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
-            _context.prev = 26;
-            _context.next = 29;
+            _context.prev = 31;
+            _context.next = 34;
             return fetchSyncData(syncParams, configOptions);
 
-          case 29:
+          case 34:
             syncData = _context.sent;
-            _context.next = 35;
+            _context.next = 40;
             break;
 
-          case 32:
-            _context.prev = 32;
-            _context.t1 = _context["catch"](26);
+          case 37:
+            _context.prev = 37;
+            _context.t1 = _context["catch"](31);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -103,7 +108,7 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t1
             });
 
-          case 35:
+          case 40:
             contentstackData = {
               syncData: syncData.data,
               sync_token: syncData.sync_token
@@ -113,12 +118,12 @@ exports.fetchData = /*#__PURE__*/function () {
               contentstackData: contentstackData
             });
 
-          case 38:
+          case 43:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[8, 20], [26, 32]]);
+    }, _callee, null, [[12, 25], [31, 37]]);
   }));
 
   return function (_x, _x2) {
