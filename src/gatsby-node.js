@@ -124,7 +124,7 @@ exports.sourceNodes = async ({
   const {
     status,
   } = store.getState();
-
+  console.log('status----->', status);
   // use a custom type prefix if specified
   const typePrefix = configOptions.type_prefix || 'Contentstack';
 
@@ -349,9 +349,11 @@ exports.sourceNodes = async ({
 
   // Storing the sync state for the next sync
   const newState = {};
+  console.log('token', `${typePrefix.toLowerCase()}-sync-token-${configOptions.api_key}`)
   newState[
     `${typePrefix.toLowerCase()}-sync-token-${configOptions.api_key}`
   ] = nextSyncToken;
+  console.log('newState---->', newState);
   setPluginStatus(newState);
 };
 

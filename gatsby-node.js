@@ -169,7 +169,8 @@ exports.sourceNodes = /*#__PURE__*/function () {
 
             cache = _ref5.cache, actions = _ref5.actions, getNode = _ref5.getNode, getNodes = _ref5.getNodes, createNodeId = _ref5.createNodeId, store = _ref5.store, reporter = _ref5.reporter, createContentDigest = _ref5.createContentDigest, getNodesByType = _ref5.getNodesByType, getCache = _ref5.getCache;
             createNode = actions.createNode, deleteNode = actions.deleteNode, touchNode = actions.touchNode, setPluginStatus = actions.setPluginStatus;
-            _store$getState = store.getState(), status = _store$getState.status; // use a custom type prefix if specified
+            _store$getState = store.getState(), status = _store$getState.status;
+            console.log('status----->', status); // use a custom type prefix if specified
 
             typePrefix = configOptions.type_prefix || 'Contentstack';
 
@@ -178,25 +179,25 @@ exports.sourceNodes = /*#__PURE__*/function () {
             }
 
             configOptions.syncToken = syncToken || null;
-            _context2.prev = 7;
-            _context2.next = 10;
+            _context2.prev = 8;
+            _context2.next = 11;
             return fetchData(configOptions, reporter);
 
-          case 10:
+          case 11:
             _yield$fetchData = _context2.sent;
             _contentstackData = _yield$fetchData.contentstackData;
             contentstackData = _contentstackData;
-            _context2.next = 15;
+            _context2.next = 16;
             return cache.get(typePrefix);
 
-          case 15:
+          case 16:
             contentstackData.contentTypes = _context2.sent;
-            _context2.next = 22;
+            _context2.next = 23;
             break;
 
-          case 18:
-            _context2.prev = 18;
-            _context2.t0 = _context2["catch"](7);
+          case 19:
+            _context2.prev = 19;
+            _context2.t0 = _context2["catch"](8);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -206,7 +207,7 @@ exports.sourceNodes = /*#__PURE__*/function () {
             });
             throw _context2.t0;
 
-          case 22:
+          case 23:
             syncData = contentstackData.syncData.reduce(function (merged, item) {
               if (!merged[item.type]) {
                 merged[item.type] = [];
@@ -274,14 +275,14 @@ exports.sourceNodes = /*#__PURE__*/function () {
             _context2.t1 = configOptions.downloadImages;
 
             if (!_context2.t1) {
-              _context2.next = 34;
+              _context2.next = 35;
               break;
             }
 
-            _context2.next = 34;
+            _context2.next = 35;
             return cache.set(SUPPORTED_FILES_COUNT, countOfSupportedFormatFiles);
 
-          case 34:
+          case 35:
             // syncData.asset_published && syncData.asset_published.forEach((item) => {
             //   const entryNodeId = makeAssetNodeUid(item.data, createNodeId, typePrefix);
             //   assetsNodeIds.add(entryNodeId);
@@ -308,12 +309,12 @@ exports.sourceNodes = /*#__PURE__*/function () {
             });
 
             if (!configOptions.downloadImages) {
-              _context2.next = 46;
+              _context2.next = 47;
               break;
             }
 
-            _context2.prev = 38;
-            _context2.next = 41;
+            _context2.prev = 39;
+            _context2.next = 42;
             return downloadAssets({
               cache: cache,
               getCache: getCache,
@@ -323,16 +324,16 @@ exports.sourceNodes = /*#__PURE__*/function () {
               reporter: reporter
             }, typePrefix, configOptions);
 
-          case 41:
-            _context2.next = 46;
+          case 42:
+            _context2.next = 47;
             break;
 
-          case 43:
-            _context2.prev = 43;
-            _context2.t2 = _context2["catch"](38);
+          case 44:
+            _context2.prev = 44;
+            _context2.t2 = _context2["catch"](39);
             reporter.info('Something went wrong while downloading assets. Details: ' + _context2.t2);
 
-          case 46:
+          case 47:
             // deleting nodes
             console.log('syncData.entry_unpublished', syncData.entry_unpublished);
             syncData.entry_unpublished && syncData.entry_unpublished.forEach(function (item) {
@@ -360,15 +361,17 @@ exports.sourceNodes = /*#__PURE__*/function () {
             nextSyncToken = contentstackData.sync_token; // Storing the sync state for the next sync
 
             newState = {};
+            console.log('token', "".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key));
             newState["".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key)] = nextSyncToken;
+            console.log('newState---->', newState);
             setPluginStatus(newState);
 
-          case 56:
+          case 59:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[7, 18], [38, 43]]);
+    }, _callee2, null, [[8, 19], [39, 44]]);
   }));
 
   return function (_x3, _x4) {
