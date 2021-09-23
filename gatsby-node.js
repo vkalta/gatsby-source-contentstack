@@ -145,11 +145,13 @@ exports.sourceNodes = /*#__PURE__*/function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             deleteContentstackNodes = function _deleteContentstackNo(item, type) {
+              console.log('item---->', item);
               var nodeId = '';
               var node = null;
 
               if (type === 'entry') {
                 nodeId = createNodeId("".concat(typePrefix.toLowerCase(), "-entry-").concat(item.uid, "-").concat(item.locale));
+                console.log('nodeId', nodeId);
               }
 
               if (type === 'asset') {
@@ -157,9 +159,11 @@ exports.sourceNodes = /*#__PURE__*/function () {
               }
 
               node = getNode(nodeId);
+              console.log('node--->', node);
 
               if (node) {
                 deleteNode(node);
+                console.log('node-in-->', node);
               }
             };
 
@@ -330,6 +334,7 @@ exports.sourceNodes = /*#__PURE__*/function () {
 
           case 46:
             // deleting nodes
+            console.log('syncData.entry_unpublished', syncData.entry_unpublished);
             syncData.entry_unpublished && syncData.entry_unpublished.forEach(function (item) {
               deleteContentstackNodes(item.data, 'entry');
             });
@@ -358,7 +363,7 @@ exports.sourceNodes = /*#__PURE__*/function () {
             newState["".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key)] = nextSyncToken;
             setPluginStatus(newState);
 
-          case 55:
+          case 56:
           case "end":
             return _context2.stop();
         }
