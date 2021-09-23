@@ -289,12 +289,14 @@ exports.sourceNodes = async ({
   }
 
   function deleteContentstackNodes(item, type) {
+    console.log('item---->', item);
     let nodeId = '';
     let node = null;
     if (type === 'entry') {
       nodeId = createNodeId(
         `${typePrefix.toLowerCase()}-entry-${item.uid}-${item.locale}`
       );
+      console.log('nodeId', nodeId);
     }
     if (type === 'asset') {
       nodeId = createNodeId(
@@ -302,13 +304,15 @@ exports.sourceNodes = async ({
       );
     }
     node = getNode(nodeId);
+    console.log('node--->', node);
     if (node) {
       deleteNode(node);
+      console.log('node-in-->', node);
     }
   }
 
   // deleting nodes
-
+  console.log('syncData.entry_unpublished', syncData.entry_unpublished);
   syncData.entry_unpublished &&
     syncData.entry_unpublished.forEach(item => {
       deleteContentstackNodes(item.data, 'entry');
