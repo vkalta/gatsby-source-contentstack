@@ -170,7 +170,8 @@ exports.sourceNodes = /*#__PURE__*/function () {
             cache = _ref5.cache, actions = _ref5.actions, getNode = _ref5.getNode, getNodes = _ref5.getNodes, createNodeId = _ref5.createNodeId, store = _ref5.store, reporter = _ref5.reporter, createContentDigest = _ref5.createContentDigest, getNodesByType = _ref5.getNodesByType, getCache = _ref5.getCache;
             createNode = actions.createNode, deleteNode = actions.deleteNode, touchNode = actions.touchNode, setPluginStatus = actions.setPluginStatus;
             _store$getState = store.getState(), status = _store$getState.status;
-            console.log('status----->', status); // use a custom type prefix if specified
+            console.log('status----->', status);
+            console.log('status.plugins', status.plugins); // use a custom type prefix if specified
 
             typePrefix = configOptions.type_prefix || 'Contentstack';
 
@@ -178,27 +179,27 @@ exports.sourceNodes = /*#__PURE__*/function () {
               syncToken = status.plugins['gatsby-source-contentstack']["".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key)];
             }
 
+            console.log('syncToken extracted', syncToken);
             configOptions.syncToken = syncToken || null;
-            _context2.prev = 8;
-            _context2.next = 11;
+            _context2.prev = 10;
+            _context2.next = 13;
             return fetchData(configOptions, reporter);
 
-          case 11:
+          case 13:
             _yield$fetchData = _context2.sent;
             _contentstackData = _yield$fetchData.contentstackData;
             contentstackData = _contentstackData;
-            console.log('_contentstackData-node lc try catch---->', JSON.stringify(_contentstackData));
-            _context2.next = 17;
+            _context2.next = 18;
             return cache.get(typePrefix);
 
-          case 17:
+          case 18:
             contentstackData.contentTypes = _context2.sent;
-            _context2.next = 24;
+            _context2.next = 25;
             break;
 
-          case 20:
-            _context2.prev = 20;
-            _context2.t0 = _context2["catch"](8);
+          case 21:
+            _context2.prev = 21;
+            _context2.t0 = _context2["catch"](10);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -208,8 +209,8 @@ exports.sourceNodes = /*#__PURE__*/function () {
             });
             throw _context2.t0;
 
-          case 24:
-            // console.log('contentstackData-node lc---->', JSON.stringify(contentstackData));
+          case 25:
+            console.log('contentstackData-sync_token', contentstackData.sync_token);
             syncData = contentstackData.syncData.reduce(function (merged, item) {
               if (!merged[item.type]) {
                 merged[item.type] = [];
@@ -277,14 +278,14 @@ exports.sourceNodes = /*#__PURE__*/function () {
             _context2.t1 = configOptions.downloadImages;
 
             if (!_context2.t1) {
-              _context2.next = 36;
+              _context2.next = 38;
               break;
             }
 
-            _context2.next = 36;
+            _context2.next = 38;
             return cache.set(SUPPORTED_FILES_COUNT, countOfSupportedFormatFiles);
 
-          case 36:
+          case 38:
             // syncData.asset_published && syncData.asset_published.forEach((item) => {
             //   const entryNodeId = makeAssetNodeUid(item.data, createNodeId, typePrefix);
             //   assetsNodeIds.add(entryNodeId);
@@ -311,12 +312,12 @@ exports.sourceNodes = /*#__PURE__*/function () {
             });
 
             if (!configOptions.downloadImages) {
-              _context2.next = 48;
+              _context2.next = 50;
               break;
             }
 
-            _context2.prev = 40;
-            _context2.next = 43;
+            _context2.prev = 42;
+            _context2.next = 45;
             return downloadAssets({
               cache: cache,
               getCache: getCache,
@@ -326,16 +327,16 @@ exports.sourceNodes = /*#__PURE__*/function () {
               reporter: reporter
             }, typePrefix, configOptions);
 
-          case 43:
-            _context2.next = 48;
+          case 45:
+            _context2.next = 50;
             break;
 
-          case 45:
-            _context2.prev = 45;
-            _context2.t2 = _context2["catch"](40);
+          case 47:
+            _context2.prev = 47;
+            _context2.t2 = _context2["catch"](42);
             reporter.info('Something went wrong while downloading assets. Details: ' + _context2.t2);
 
-          case 48:
+          case 50:
             // deleting nodes
             console.log('syncData.entry_unpublished', syncData.entry_unpublished);
             syncData.entry_unpublished && syncData.entry_unpublished.forEach(function (item) {
@@ -368,12 +369,12 @@ exports.sourceNodes = /*#__PURE__*/function () {
             console.log('newState---->', newState);
             setPluginStatus(newState);
 
-          case 60:
+          case 62:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[8, 20], [40, 45]]);
+    }, _callee2, null, [[10, 21], [42, 47]]);
   }));
 
   return function (_x3, _x4) {

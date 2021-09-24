@@ -29,14 +29,14 @@ exports.fetchData = /*#__PURE__*/function () {
             console.time('Fetch Contentstack data');
             console.log('Starting to fetch data from Contentstack');
             syncData = {};
-            console.log('configOptions.expediteBuild', configOptions.expediteBuild);
+            console.log('configOptions', configOptions);
 
             if (!configOptions.expediteBuild) {
-              _context.next = 33;
+              _context.next = 30;
               break;
             }
 
-            console.log('configOptions--->', configOptions.syncToken);
+            console.log('configOptions.syncToken--->', configOptions.syncToken);
             syncEntryParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
@@ -49,30 +49,29 @@ exports.fetchData = /*#__PURE__*/function () {
               init: true
             };
             syncEntryParams.type = 'entry_published';
-            syncAssetParams.type = 'asset_published';
-            console.log('syncEntryParams.type==>', syncEntryParams);
-            _context.prev = 12;
-            _context.next = 15;
+            syncAssetParams.type = 'asset_published'; // console.log('syncEntryParams.type==>', syncEntryParams);
+
+            _context.prev = 11;
+            _context.next = 14;
             return Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
 
-          case 15:
+          case 14:
             _yield$Promise$all = _context.sent;
             _yield$Promise$all2 = (0, _slicedToArray2["default"])(_yield$Promise$all, 2);
             syncEntryData = _yield$Promise$all2[0];
             syncAssetData = _yield$Promise$all2[1];
-            console.log('syncEntryData---->', JSON.stringify(syncEntryData));
-            console.log('syncEntryData.sync_token', syncEntryData.sync_token);
+            // console.log('syncEntryData---->', JSON.stringify(syncEntryData));
             data = syncEntryData.data.concat(syncAssetData.data);
             console.log('syncEntryData.sync_token[after]', syncEntryData.sync_token);
             syncData.data = data;
             syncData.token = null;
             syncData.sync_token = syncEntryData.sync_token;
-            _context.next = 31;
+            _context.next = 28;
             break;
 
-          case 28:
-            _context.prev = 28;
-            _context.t0 = _context["catch"](12);
+          case 25:
+            _context.prev = 25;
+            _context.t0 = _context["catch"](11);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -81,28 +80,28 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t0
             });
 
-          case 31:
-            _context.next = 43;
+          case 28:
+            _context.next = 40;
             break;
 
-          case 33:
+          case 30:
             syncParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
-            _context.prev = 34;
-            _context.next = 37;
+            _context.prev = 31;
+            _context.next = 34;
             return fetchSyncData(syncParams, configOptions);
 
-          case 37:
+          case 34:
             syncData = _context.sent;
-            _context.next = 43;
+            _context.next = 40;
             break;
 
-          case 40:
-            _context.prev = 40;
-            _context.t1 = _context["catch"](34);
+          case 37:
+            _context.prev = 37;
+            _context.t1 = _context["catch"](31);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -111,7 +110,7 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t1
             });
 
-          case 43:
+          case 40:
             contentstackData = {
               syncData: syncData.data,
               sync_token: syncData.sync_token
@@ -122,12 +121,12 @@ exports.fetchData = /*#__PURE__*/function () {
               contentstackData: contentstackData
             });
 
-          case 47:
+          case 44:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[12, 28], [34, 40]]);
+    }, _callee, null, [[11, 25], [31, 37]]);
   }));
 
   return function (_x, _x2) {

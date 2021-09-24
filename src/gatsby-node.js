@@ -125,6 +125,7 @@ exports.sourceNodes = async ({
     status,
   } = store.getState();
   console.log('status----->', status);
+  console.log('status.plugins', status.plugins);
   // use a custom type prefix if specified
   const typePrefix = configOptions.type_prefix || 'Contentstack';
 
@@ -138,14 +139,13 @@ exports.sourceNodes = async ({
         `${typePrefix.toLowerCase()}-sync-token-${configOptions.api_key}`
       ];
   }
-
+  console.log('syncToken extracted', syncToken);
   configOptions.syncToken = syncToken || null;
 
   let contentstackData;
   try {
     const { contentstackData: _contentstackData } = await fetchData(configOptions, reporter);
     contentstackData = _contentstackData;
-    console.log('_contentstackData-node lc try catch---->', JSON.stringify(_contentstackData));
     contentstackData.contentTypes = await cache.get(typePrefix);
   } catch (error) {
     reporter.panic({
@@ -157,7 +157,7 @@ exports.sourceNodes = async ({
     });
     throw error;
   }
-  // console.log('contentstackData-node lc---->', JSON.stringify(contentstackData));
+  console.log('contentstackData-sync_token', contentstackData.sync_token);
   const syncData = contentstackData.syncData.reduce((merged, item) => {
     if (!merged[item.type]) {
       merged[item.type] = [];
