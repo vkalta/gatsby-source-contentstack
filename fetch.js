@@ -45,8 +45,9 @@ exports.fetchData = /*#__PURE__*/function () {
               sync_token: configOptions.syncToken
             } : {
               init: true
-            };
-            syncEntryParams.type = 'entry_published';
+            }; // syncEntryParams.type = 'entry_published';
+
+            syncEntryParams.type = '';
             syncAssetParams.type = 'asset_published';
             _context.prev = 9;
             _context.next = 12;

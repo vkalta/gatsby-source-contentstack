@@ -28,7 +28,8 @@ exports.fetchData = async (configOptions, reporter) => {
         init: true,
       };
 
-    syncEntryParams.type = 'entry_published';
+    // syncEntryParams.type = 'entry_published';
+    syncEntryParams.type = '';
     syncAssetParams.type = 'asset_published';
 
     try {
