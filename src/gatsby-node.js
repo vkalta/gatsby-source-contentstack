@@ -114,32 +114,13 @@ exports.sourceNodes = async ({
   getNodesByType,
   getCache,
 }, configOptions) => {
-  const {
-    createNode,
-    deleteNode,
-    touchNode,
-    setPluginStatus,
-  } = actions;
-  let syncToken;
-  const {
-    status,
-  } = store.getState();
-  console.log('status----->', status);
-  console.log('status.plugins', status.plugins);
+  const { createNode,deleteNode,touchNode } = actions;
+  
   // use a custom type prefix if specified
   const typePrefix = configOptions.type_prefix || 'Contentstack';
 
-  if (
-    status &&
-    status.plugins &&
-    status.plugins['gatsby-source-contentstack']
-  ) {
-    syncToken =
-      status.plugins['gatsby-source-contentstack'][
-        `${typePrefix.toLowerCase()}-sync-token-${configOptions.api_key}`
-      ];
-  }
-  console.log('syncToken extracted', syncToken);
+  const syncToken = await cache.get(configOptions.api_key);
+  console.log('syncToken cached', syncToken);
   configOptions.syncToken = syncToken || null;
 
   let contentstackData;
@@ -313,7 +294,7 @@ exports.sourceNodes = async ({
   }
 
   // deleting nodes
-  console.log('syncData.entry_unpublished', syncData.entry_unpublished);
+  console.log('syncData.entry_unpublished', JSON.stringify(syncData.entry_unpublished));
   syncData.entry_unpublished &&
     syncData.entry_unpublished.forEach(item => {
       deleteContentstackNodes(item.data, 'entry');
@@ -347,15 +328,8 @@ exports.sourceNodes = async ({
 
   // Updating the syncToken
   const nextSyncToken = contentstackData.sync_token;
-
-  // Storing the sync state for the next sync
-  const newState = {};
-  console.log('token', `${typePrefix.toLowerCase()}-sync-token-${configOptions.api_key}`)
-  newState[
-    `${typePrefix.toLowerCase()}-sync-token-${configOptions.api_key}`
-  ] = nextSyncToken;
-  console.log('newState---->', newState);
-  setPluginStatus(newState);
+  console.log('nextSyncToken', nextSyncToken);
+  await cache.set(configOptions.api_key, nextSyncToken);
 };
 
 

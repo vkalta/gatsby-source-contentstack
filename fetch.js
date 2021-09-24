@@ -28,11 +28,10 @@ exports.fetchData = /*#__PURE__*/function () {
           case 0:
             console.time('Fetch Contentstack data');
             console.log('Starting to fetch data from Contentstack');
-            syncData = {};
-            console.log('configOptions', configOptions);
+            syncData = {}; // console.log('configOptions', configOptions);
 
             if (!configOptions.expediteBuild) {
-              _context.next = 30;
+              _context.next = 28;
               break;
             }
 
@@ -42,36 +41,33 @@ exports.fetchData = /*#__PURE__*/function () {
             } : {
               init: true
             };
-            console.log('syncEntryParams--->', syncEntryParams);
             syncAssetParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
             syncEntryParams.type = 'entry_published';
-            syncAssetParams.type = 'asset_published'; // console.log('syncEntryParams.type==>', syncEntryParams);
-
-            _context.prev = 11;
-            _context.next = 14;
+            syncAssetParams.type = 'asset_published';
+            _context.prev = 9;
+            _context.next = 12;
             return Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
 
-          case 14:
+          case 12:
             _yield$Promise$all = _context.sent;
             _yield$Promise$all2 = (0, _slicedToArray2["default"])(_yield$Promise$all, 2);
             syncEntryData = _yield$Promise$all2[0];
             syncAssetData = _yield$Promise$all2[1];
-            // console.log('syncEntryData---->', JSON.stringify(syncEntryData));
             data = syncEntryData.data.concat(syncAssetData.data);
-            console.log('syncEntryData.sync_token[after]', syncEntryData.sync_token);
+            console.log('syncEntryData.sync_token[api]', syncEntryData.sync_token);
             syncData.data = data;
             syncData.token = null;
             syncData.sync_token = syncEntryData.sync_token;
-            _context.next = 28;
+            _context.next = 26;
             break;
 
-          case 25:
-            _context.prev = 25;
-            _context.t0 = _context["catch"](11);
+          case 23:
+            _context.prev = 23;
+            _context.t0 = _context["catch"](9);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -80,28 +76,28 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t0
             });
 
-          case 28:
-            _context.next = 40;
+          case 26:
+            _context.next = 38;
             break;
 
-          case 30:
+          case 28:
             syncParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
-            _context.prev = 31;
-            _context.next = 34;
+            _context.prev = 29;
+            _context.next = 32;
             return fetchSyncData(syncParams, configOptions);
 
-          case 34:
+          case 32:
             syncData = _context.sent;
-            _context.next = 40;
+            _context.next = 38;
             break;
 
-          case 37:
-            _context.prev = 37;
-            _context.t1 = _context["catch"](31);
+          case 35:
+            _context.prev = 35;
+            _context.t1 = _context["catch"](29);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -110,23 +106,22 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t1
             });
 
-          case 40:
+          case 38:
             contentstackData = {
               syncData: syncData.data,
               sync_token: syncData.sync_token
             };
             console.timeEnd('Fetch Contentstack data');
-            console.log('time ended', JSON.stringify(contentstackData));
             return _context.abrupt("return", {
               contentstackData: contentstackData
             });
 
-          case 44:
+          case 41:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[11, 25], [31, 37]]);
+    }, _callee, null, [[9, 23], [29, 35]]);
   }));
 
   return function (_x, _x2) {

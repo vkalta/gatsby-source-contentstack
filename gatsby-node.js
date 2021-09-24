@@ -138,7 +138,7 @@ exports.createSchemaCustomization = /*#__PURE__*/function () {
 
 exports.sourceNodes = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(_ref5, configOptions) {
-    var cache, actions, getNode, getNodes, createNodeId, store, reporter, createContentDigest, getNodesByType, getCache, createNode, deleteNode, touchNode, setPluginStatus, syncToken, _store$getState, status, typePrefix, contentstackData, _yield$fetchData, _contentstackData, syncData, entriesNodeIds, assetsNodeIds, existingNodes, countOfSupportedFormatFiles, deleteContentstackNodes, nextSyncToken, newState;
+    var cache, actions, getNode, getNodes, createNodeId, store, reporter, createContentDigest, getNodesByType, getCache, createNode, deleteNode, touchNode, typePrefix, syncToken, contentstackData, _yield$fetchData, _contentstackData, syncData, entriesNodeIds, assetsNodeIds, existingNodes, countOfSupportedFormatFiles, deleteContentstackNodes, nextSyncToken;
 
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
@@ -168,38 +168,35 @@ exports.sourceNodes = /*#__PURE__*/function () {
             };
 
             cache = _ref5.cache, actions = _ref5.actions, getNode = _ref5.getNode, getNodes = _ref5.getNodes, createNodeId = _ref5.createNodeId, store = _ref5.store, reporter = _ref5.reporter, createContentDigest = _ref5.createContentDigest, getNodesByType = _ref5.getNodesByType, getCache = _ref5.getCache;
-            createNode = actions.createNode, deleteNode = actions.deleteNode, touchNode = actions.touchNode, setPluginStatus = actions.setPluginStatus;
-            _store$getState = store.getState(), status = _store$getState.status;
-            console.log('status----->', status);
-            console.log('status.plugins', status.plugins); // use a custom type prefix if specified
+            createNode = actions.createNode, deleteNode = actions.deleteNode, touchNode = actions.touchNode; // use a custom type prefix if specified
 
             typePrefix = configOptions.type_prefix || 'Contentstack';
+            _context2.next = 6;
+            return cache.get(configOptions.api_key);
 
-            if (status && status.plugins && status.plugins['gatsby-source-contentstack']) {
-              syncToken = status.plugins['gatsby-source-contentstack']["".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key)];
-            }
-
-            console.log('syncToken extracted', syncToken);
+          case 6:
+            syncToken = _context2.sent;
+            console.log('syncToken cached', syncToken);
             configOptions.syncToken = syncToken || null;
-            _context2.prev = 10;
-            _context2.next = 13;
+            _context2.prev = 9;
+            _context2.next = 12;
             return fetchData(configOptions, reporter);
 
-          case 13:
+          case 12:
             _yield$fetchData = _context2.sent;
             _contentstackData = _yield$fetchData.contentstackData;
             contentstackData = _contentstackData;
-            _context2.next = 18;
+            _context2.next = 17;
             return cache.get(typePrefix);
 
-          case 18:
+          case 17:
             contentstackData.contentTypes = _context2.sent;
-            _context2.next = 25;
+            _context2.next = 24;
             break;
 
-          case 21:
-            _context2.prev = 21;
-            _context2.t0 = _context2["catch"](10);
+          case 20:
+            _context2.prev = 20;
+            _context2.t0 = _context2["catch"](9);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -209,7 +206,7 @@ exports.sourceNodes = /*#__PURE__*/function () {
             });
             throw _context2.t0;
 
-          case 25:
+          case 24:
             console.log('contentstackData-sync_token', contentstackData.sync_token);
             syncData = contentstackData.syncData.reduce(function (merged, item) {
               if (!merged[item.type]) {
@@ -278,14 +275,14 @@ exports.sourceNodes = /*#__PURE__*/function () {
             _context2.t1 = configOptions.downloadImages;
 
             if (!_context2.t1) {
-              _context2.next = 38;
+              _context2.next = 37;
               break;
             }
 
-            _context2.next = 38;
+            _context2.next = 37;
             return cache.set(SUPPORTED_FILES_COUNT, countOfSupportedFormatFiles);
 
-          case 38:
+          case 37:
             // syncData.asset_published && syncData.asset_published.forEach((item) => {
             //   const entryNodeId = makeAssetNodeUid(item.data, createNodeId, typePrefix);
             //   assetsNodeIds.add(entryNodeId);
@@ -312,12 +309,12 @@ exports.sourceNodes = /*#__PURE__*/function () {
             });
 
             if (!configOptions.downloadImages) {
-              _context2.next = 50;
+              _context2.next = 49;
               break;
             }
 
-            _context2.prev = 42;
-            _context2.next = 45;
+            _context2.prev = 41;
+            _context2.next = 44;
             return downloadAssets({
               cache: cache,
               getCache: getCache,
@@ -327,18 +324,18 @@ exports.sourceNodes = /*#__PURE__*/function () {
               reporter: reporter
             }, typePrefix, configOptions);
 
-          case 45:
-            _context2.next = 50;
+          case 44:
+            _context2.next = 49;
             break;
 
-          case 47:
-            _context2.prev = 47;
-            _context2.t2 = _context2["catch"](42);
+          case 46:
+            _context2.prev = 46;
+            _context2.t2 = _context2["catch"](41);
             reporter.info('Something went wrong while downloading assets. Details: ' + _context2.t2);
 
-          case 50:
+          case 49:
             // deleting nodes
-            console.log('syncData.entry_unpublished', syncData.entry_unpublished);
+            console.log('syncData.entry_unpublished', JSON.stringify(syncData.entry_unpublished));
             syncData.entry_unpublished && syncData.entry_unpublished.forEach(function (item) {
               deleteContentstackNodes(item.data, 'entry');
             });
@@ -361,20 +358,17 @@ exports.sourceNodes = /*#__PURE__*/function () {
               });
             }); // Updating the syncToken
 
-            nextSyncToken = contentstackData.sync_token; // Storing the sync state for the next sync
+            nextSyncToken = contentstackData.sync_token;
+            console.log('nextSyncToken', nextSyncToken);
+            _context2.next = 59;
+            return cache.set(configOptions.api_key, nextSyncToken);
 
-            newState = {};
-            console.log('token', "".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key));
-            newState["".concat(typePrefix.toLowerCase(), "-sync-token-").concat(configOptions.api_key)] = nextSyncToken;
-            console.log('newState---->', newState);
-            setPluginStatus(newState);
-
-          case 62:
+          case 59:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[10, 21], [42, 47]]);
+    }, _callee2, null, [[9, 20], [41, 46]]);
   }));
 
   return function (_x3, _x4) {
