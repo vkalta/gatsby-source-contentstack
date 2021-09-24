@@ -31,7 +31,7 @@ exports.fetchData = /*#__PURE__*/function () {
             syncData = {}; // console.log('configOptions', configOptions);
 
             if (!configOptions.expediteBuild) {
-              _context.next = 28;
+              _context.next = 29;
               break;
             }
 
@@ -57,16 +57,17 @@ exports.fetchData = /*#__PURE__*/function () {
             _yield$Promise$all2 = (0, _slicedToArray2["default"])(_yield$Promise$all, 2);
             syncEntryData = _yield$Promise$all2[0];
             syncAssetData = _yield$Promise$all2[1];
+            console.log('stringified entries', JSON.stringify(syncEntryData));
             data = syncEntryData.data.concat(syncAssetData.data);
             console.log('syncEntryData.sync_token[api]', syncEntryData.sync_token);
             syncData.data = data;
             syncData.token = null;
             syncData.sync_token = syncEntryData.sync_token;
-            _context.next = 26;
+            _context.next = 27;
             break;
 
-          case 23:
-            _context.prev = 23;
+          case 24:
+            _context.prev = 24;
             _context.t0 = _context["catch"](9);
             reporter.panic({
               id: CODES.SyncError,
@@ -76,28 +77,28 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t0
             });
 
-          case 26:
-            _context.next = 38;
+          case 27:
+            _context.next = 39;
             break;
 
-          case 28:
+          case 29:
             syncParams = configOptions.syncToken ? {
               sync_token: configOptions.syncToken
             } : {
               init: true
             };
-            _context.prev = 29;
-            _context.next = 32;
+            _context.prev = 30;
+            _context.next = 33;
             return fetchSyncData(syncParams, configOptions);
 
-          case 32:
+          case 33:
             syncData = _context.sent;
-            _context.next = 38;
+            _context.next = 39;
             break;
 
-          case 35:
-            _context.prev = 35;
-            _context.t1 = _context["catch"](29);
+          case 36:
+            _context.prev = 36;
+            _context.t1 = _context["catch"](30);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -106,7 +107,7 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t1
             });
 
-          case 38:
+          case 39:
             contentstackData = {
               syncData: syncData.data,
               sync_token: syncData.sync_token
@@ -116,12 +117,12 @@ exports.fetchData = /*#__PURE__*/function () {
               contentstackData: contentstackData
             });
 
-          case 41:
+          case 42:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[9, 23], [29, 35]]);
+    }, _callee, null, [[9, 24], [30, 36]]);
   }));
 
   return function (_x, _x2) {

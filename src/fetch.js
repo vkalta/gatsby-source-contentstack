@@ -33,6 +33,7 @@ exports.fetchData = async (configOptions, reporter) => {
 
     try {
       const [syncEntryData, syncAssetData] = await Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
+      console.log('stringified entries', JSON.stringify(syncEntryData));
       const data = syncEntryData.data.concat(syncAssetData.data);
       console.log('syncEntryData.sync_token[api]', syncEntryData.sync_token);
       syncData.data = data;
