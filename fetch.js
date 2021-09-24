@@ -45,10 +45,9 @@ exports.fetchData = /*#__PURE__*/function () {
               sync_token: configOptions.syncToken
             } : {
               init: true
-            }; // syncEntryParams.type = 'entry_published';
-
-            syncEntryParams.type = '';
-            syncAssetParams.type = 'asset_published';
+            };
+            syncEntryParams.type = 'entry_published, entry_unpublished';
+            syncAssetParams.type = 'asset_published, asset_unpublished';
             _context.prev = 9;
             _context.next = 12;
             return Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);

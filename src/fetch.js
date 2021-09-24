@@ -28,9 +28,8 @@ exports.fetchData = async (configOptions, reporter) => {
         init: true,
       };
 
-    // syncEntryParams.type = 'entry_published';
-    syncEntryParams.type = '';
-    syncAssetParams.type = 'asset_published';
+    syncEntryParams.type = 'entry_published, entry_unpublished';
+    syncAssetParams.type = 'asset_published, asset_unpublished';
 
     try {
       const [syncEntryData, syncAssetData] = await Promise.all([fetchSyncData(syncEntryParams, configOptions), fetchSyncData(syncAssetParams, configOptions)]);
