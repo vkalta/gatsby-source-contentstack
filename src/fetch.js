@@ -36,8 +36,10 @@ exports.fetchData = async (configOptions, reporter) => {
       console.log('syncEntryData---->', JSON.stringify(syncEntryData));
       console.log('syncEntryData.sync_token', syncEntryData.sync_token);
       const data = syncEntryData.data.concat(syncAssetData.data);
+      console.log('syncEntryData.sync_token[after]', syncEntryData.sync_token);
       syncData.data = data;
       syncData.token = null;
+      syncData.sync_token = syncEntryData.sync_token;
     } catch (error) {
       reporter.panic({
         id: CODES.SyncError,
@@ -73,7 +75,7 @@ exports.fetchData = async (configOptions, reporter) => {
   };
 
   console.timeEnd('Fetch Contentstack data');
-  console.log('time ended', contentstackData);
+  console.log('time ended', JSON.stringify(contentstackData));
   return {
     contentstackData,
   };
