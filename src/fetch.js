@@ -54,7 +54,7 @@ exports.fetchData = async (configOptions, reporter) => {
     } : {
         init: true,
       };
-
+    console.log('syncParams', syncParams);
     try {
       syncData = await fetchSyncData(syncParams, configOptions);
     } catch (error) {
@@ -67,7 +67,7 @@ exports.fetchData = async (configOptions, reporter) => {
       });
     }
   }
-
+  console.log('json', JSON.stringify(syncData));
   const contentstackData = {
     syncData: syncData.data,
     sync_token: syncData.sync_token,
