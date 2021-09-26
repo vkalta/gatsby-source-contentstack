@@ -78,7 +78,7 @@ exports.fetchData = /*#__PURE__*/function () {
             });
 
           case 27:
-            _context.next = 39;
+            _context.next = 40;
             break;
 
           case 29:
@@ -87,18 +87,19 @@ exports.fetchData = /*#__PURE__*/function () {
             } : {
               init: true
             };
-            _context.prev = 30;
-            _context.next = 33;
+            console.log('syncParams', syncParams);
+            _context.prev = 31;
+            _context.next = 34;
             return fetchSyncData(syncParams, configOptions);
 
-          case 33:
+          case 34:
             syncData = _context.sent;
-            _context.next = 39;
+            _context.next = 40;
             break;
 
-          case 36:
-            _context.prev = 36;
-            _context.t1 = _context["catch"](30);
+          case 37:
+            _context.prev = 37;
+            _context.t1 = _context["catch"](31);
             reporter.panic({
               id: CODES.SyncError,
               context: {
@@ -107,7 +108,8 @@ exports.fetchData = /*#__PURE__*/function () {
               error: _context.t1
             });
 
-          case 39:
+          case 40:
+            console.log('json', JSON.stringify(syncData));
             contentstackData = {
               syncData: syncData.data,
               sync_token: syncData.sync_token
@@ -117,12 +119,12 @@ exports.fetchData = /*#__PURE__*/function () {
               contentstackData: contentstackData
             });
 
-          case 42:
+          case 44:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[9, 24], [30, 36]]);
+    }, _callee, null, [[9, 24], [31, 37]]);
   }));
 
   return function (_x, _x2) {
